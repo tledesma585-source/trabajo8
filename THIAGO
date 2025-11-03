@@ -1,0 +1,33 @@
+CREATE TABLE cliente (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  nombre TEXT NOT NULL,
+  direccion TEXT,
+  telefono TEXT,
+  email TEXT
+);
+
+CREATE TABLE producto (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  descripcion TEXT NOT NULL,
+  precio REAL NOT NULL,
+  stock INTEGER DEFAULT 0
+);
+
+CREATE TABLE factura (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  fecha DATETIME DEFAULT (datetime('now')),
+  cliente_id INTEGER NOT NULL,
+  total REAL DEFAULT 0,
+  FOREIGN KEY (cliente_id) REFERENCES cliente(id)
+);
+
+CREATE TABLE item_factura (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  factura_id INTEGER NOT NULL,
+  producto_id INTEGER NOT NULL,
+  cantidad INTEGER NOT NULL,
+  precio_unitario REAL NOT NULL,
+  subtotal REAL NOT NULL,
+  FOREIGN KEY (factura_id) REFERENCES factura(id),
+  FOREIGN KEY (producto_id) REFERENCES producto(id)
+);
